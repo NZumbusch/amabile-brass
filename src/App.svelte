@@ -13,7 +13,7 @@
             location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
             date: "27.9.2026",
             time: "16:00",
-            ticketUrl: ""
+            ticketUrl: "https://bprm.info/"
         },
         {
             title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
@@ -110,17 +110,17 @@
 <main class="w-full min-h-screen text-carbon-black-900 selection:bg-powder-blue-200 selection:text-carbon-black-900 relative">
     
     <!-- Language Toggle -->
-    <div class="absolute top-6 right-8 z-50 flex space-x-4 font-sans text-sm font-medium tracking-widest uppercase">
+    <div class="absolute top-4 right-4 md:top-6 md:right-8 z-50 flex space-x-4 font-sans text-sm font-medium tracking-widest uppercase">
         <button onclick={() => lang = 'de'} class="transition-colors duration-300 {lang === 'de' ? 'text-white' : 'text-white/50 hover:text-white/80'}">DE</button>
         <span class="text-white/30">|</span>
         <button onclick={() => lang = 'en'} class="transition-colors duration-300 {lang === 'en' ? 'text-white' : 'text-white/50 hover:text-white/80'}">EN</button>
     </div>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative w-full h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-carbon-black-950">
+    <section id="hero" class="relative w-full h-[65svh] md:h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-carbon-black-950">
         <!-- Background Image (Fully vibrant now) -->
         <div class="absolute inset-0 z-0">
-            <img src="/img/pictures/amabile_colored_background.jpg" alt="Amabile Brass" class="w-full h-full object-cover object-[50%_25%] opacity-100" />
+            <img src="/img/pictures/amabile_colored_background_crop.jpg" alt="Amabile Brass" class="w-full h-full object-cover object-[50%_25%] opacity-100" />
             <!-- Soft radial gradient only behind the text so the edges remain untouched -->
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,transparent_70%)]"></div>
         </div>
