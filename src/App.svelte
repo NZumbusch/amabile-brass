@@ -32,15 +32,11 @@
     ];
 
     type Language = 'de' | 'en';
-    let lang = $state<Language>('de');
+    let lang = $state<Language>(typeof navigator !== 'undefined' && navigator.language.startsWith('en') ? 'en' : 'de');
 
-    onMount(() => {
-        // Detect language
-        if (navigator.language.startsWith('en')) {
-            lang = 'en';
-        }
-
-        // Setup scroll animations safely
+    $effect(() => {
+        const currentLang = lang; // trigger effect on language change
+        
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -50,7 +46,9 @@
             });
         }, { threshold: 0.05, rootMargin: "0px 0px -10% 0px" });
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal:not(.active)').forEach(el => observer.observe(el));
+        
+        return () => observer.disconnect();
     });
 
     const scrollDown = () => {
@@ -71,7 +69,7 @@
             biographyTitle: "Biografie",
             biographyText: [
                 "Amabile Brass ist ein 2025 neu gegründetes Ensemble, das mit seinem lieblichen, virtuosen und zugleich aufregenden kammermusikalischen Zusammenspiel Räume zum Klingen bringt. Die Besetzung aus tiefen, konisch geformten Blechblasinstrumenten bildet die Grundlage für einen außergewöhnlich homogenen Klangkörper, der mit seinen Farben und der Wärme an eine Orgel oder einen Chor erinnert.",
-                "Ein zentrales Anliegen des Ensembles ist es, die oft unterschätzten und mit Klischees behafteten Instrumente Althorn, Euphonium und Tuba auf eine klassische und unterhaltsame Weise einem breiten Publikum näherzubringen. Durch die wachsende Präsenz dieser Instrumente in Brass Bands und professionellen Blasorchestern gewinnen sie zunehmend an Popularität und finden auch in Deutschland ihren Platz an Musikhochschulen und in der professionellen Musikszene.",
+                "Ein zentrales Anliegen des Ensembles ist es, die oft unterschätzten und mit Klischees behafteten Instrumente Althorn (Anabel Voigt), Euphonium (Nathan Zumbusch und Klemens Vetter) und Tuba (Lara Schomann) auf eine klassische und unterhaltsame Weise einem breiten Publikum näherzubringen. Durch die wachsende Präsenz dieser Instrumente in Brass Bands und professionellen Blasorchestern gewinnen sie zunehmend an Popularität und finden auch in Deutschland ihren Platz an Musikhochschulen und in der professionellen Musikszene.",
                 "Die Mitglieder von Amabile Brass sind zwischen 20 und 32 Jahren alt und in vielfältigen Bereichen tätig - von der freischaffenden künstlerischen Arbeit über die Hochschullehre bis hin zur Musikphysiologie und Musikpsychologie. Gemeinsam vereinen sie die Leidenschaft, die Ausdruckskraft der tiefen Blechblasinstrumente in all ihren Facetten erlebbar zu machen."
             ],
             concertsTitle: "Konzerte",
@@ -118,10 +116,10 @@
 
     <!-- HERO SECTION -->
     <section id="hero" class="relative w-full h-[65svh] md:h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-carbon-black-950">
-        <!-- Background Image (Fully vibrant now) -->
+        <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img src="/img/pictures/amabile_colored_background_crop.jpg" alt="Amabile Brass" class="w-full h-full object-cover object-[50%_25%] opacity-100" />
-            <!-- Soft radial gradient only behind the text so the edges remain untouched -->
+            <!-- Radial gradient only behind the text so the edges remain untouched -->
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,transparent_70%)]"></div>
         </div>
         
@@ -142,7 +140,7 @@
     </section>
 
     <!-- BIOGRAPHY SECTION -->
-    <section id="biography" class="py-24 md:py-36 px-8 md:px-24 bg-pale-oak-50">
+    <section id="biography" class="pt-24 pb-6 md:pt-36 md:pb-20 px-8 md:px-24 bg-pale-oak-50">
         <div class="max-w-3xl mx-auto flex flex-col items-center text-center">
             <h2 class="font-serif text-4xl md:text-6xl mb-14 text-carbon-black-800 reveal">{t.biographyTitle}</h2>
             <div class="font-sans text-lg md:text-xl font-light leading-relaxed text-carbon-black-700 space-y-8">
