@@ -7,11 +7,19 @@
         { icon: "fa:instagram", url: "https://www.instagram.com/amabile.brass" }
     ];
 
-    const upcomingConcerts = [
+    const allConcerts = [
         {
             title: { de: "Une histoire de france - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de france - Concert with Wind Philharmonic Rhein-Main" },
             location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
+            date: "27.9.2025",
+            isoDate: "2025-09-27",
+            time: "16:00",
+            ticketUrl: "https://bprm.info/"
+        }, {
+            title: { de: "Une histoire de france - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de france - Concert with Wind Philharmonic Rhein-Main" },
+            location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
             date: "27.9.2026",
+            isoDate: "2026-09-27",
             time: "16:00",
             ticketUrl: "https://bprm.info/"
         },
@@ -19,6 +27,7 @@
             title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
             location: { de: "Dreifaltigkeitskirche Freiburg", en: "Trinity Church Freiburg" },
             date: "5.12.2026",
+            isoDate: "2026-12-05",
             time: "16:00 - 17:30",
             ticketUrl: ""
         },
@@ -26,6 +35,7 @@
             title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
             location: { de: "St. Petrus Canisius Kirche Freiburg", en: "St. Petrus Canisius Church Freiburg" },
             date: "5.12.2026",
+            isoDate: "2026-12-05",
             time: "19:30 - 21:00",
             ticketUrl: ""
         },
@@ -33,6 +43,7 @@
             title: { de: "Reihe Forum Komposition 13", en: "Forum Composition Series 13" },
             location: { de: "Palais Bellevue, Kassel", en: "Palais Bellevue, Kassel" },
             date: "21.11.2026",
+            isoDate: "2026-11-21",
             time: "20:00 - 21:30",
             ticketUrl: ""
         }
@@ -41,8 +52,31 @@
     type Language = 'de' | 'en';
     let lang = $state<Language>(typeof navigator !== 'undefined' && navigator.language.startsWith('en') ? 'en' : 'de');
 
+    let showPast = $state(false);
+    let futureLimit = $state(5);
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const mappedConcerts = allConcerts.map(c => ({
+        ...c,
+        parsedDate: new Date(c.isoDate)
+    }));
+
+    const futureConcerts = mappedConcerts
+        .filter(c => c.parsedDate >= today)
+        .sort((a, b) => a.parsedDate.getTime() - b.parsedDate.getTime());
+        
+    const pastConcerts = mappedConcerts
+        .filter(c => c.parsedDate < today)
+        .sort((a, b) => b.parsedDate.getTime() - a.parsedDate.getTime());
+        
+    let displayedFuture = $derived(futureConcerts.slice(0, futureLimit));
+    let hasMoreFuture = $derived(futureLimit < futureConcerts.length);
+
     $effect(() => {
-        const currentLang = lang; // trigger effect on language change
+        // trigger effect on language change, or when concerts are toggled/paged
+        const deps = [lang, showPast, futureLimit]; 
         
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
@@ -81,8 +115,12 @@
             ],
             concertsTitle: "Konzerte",
             upcoming: "Demnächst",
+            past: "Vergangen",
             tickets: "Tickets",
             moreDates: "Weitere Termine werden bald bekannt gegeben.",
+            showPast: "Vergangene Konzerte anzeigen",
+            hidePast: "Vergangene Konzerte ausblenden",
+            showMore: "Mehr anzeigen",
             contactTitle: "Kontakt",
             contactDesc: "Haben Sie Interesse, uns für eine Veranstaltung zu buchen, oder möchten Sie einfach Hallo sagen? Wir würden uns freuen, von Ihnen zu hören!",
             followUs: "Folgen Sie uns",
@@ -100,8 +138,12 @@
             ],
             concertsTitle: "Concerts",
             upcoming: "Upcoming",
+            past: "Past",
             tickets: "Tickets",
             moreDates: "More dates to be announced soon.",
+            showPast: "Show past concerts",
+            hidePast: "Hide past concerts",
+            showMore: "Show more",
             contactTitle: "Get in touch",
             contactDesc: "Interested in booking us for an event, or just want to say hello? We would love to hear from you.",
             followUs: "Follow Us",
@@ -152,7 +194,7 @@
             <h2 class="font-serif text-4xl md:text-6xl mb-14 text-carbon-black-800 reveal">{t.biographyTitle}</h2>
             <div class="font-sans text-lg md:text-xl font-light leading-relaxed text-carbon-black-700 space-y-8">
                 {#each t.biographyText as paragraph, i}
-                    <p class="reveal" style="transition-delay: {i * 100}ms">{paragraph}</p>
+                    <p class="reveal">{paragraph}</p>
                 {/each}
             </div>
         </div>
@@ -163,8 +205,8 @@
         <div class="max-w-4xl mx-auto">
             <h2 class="font-serif text-4xl md:text-6xl mb-16 text-center text-carbon-black-800 reveal">{t.concertsTitle}</h2>
             <div class="flex flex-col space-y-6">
-                {#each upcomingConcerts as concert, i}
-                <div class="reveal group flex flex-col md:flex-row justify-between items-start md:items-center p-8 md:p-10 bg-white border border-powder-blue-100 rounded-xl hover:shadow-xl hover:border-powder-blue-300 transition-all duration-300 gap-6" style="transition-delay: {i * 100}ms">
+                {#each displayedFuture as concert, i}
+                <div class="reveal group flex flex-col md:flex-row justify-between items-start md:items-center p-8 md:p-10 bg-white border border-powder-blue-100 rounded-xl hover:shadow-xl hover:border-powder-blue-300 transition-all duration-300 gap-6">
                     <div class="flex flex-col flex-1 w-full md:pr-8">
                         <span class="font-sans font-semibold text-powder-blue-600 text-xs tracking-[0.2em] uppercase mb-3 block">{t.upcoming}</span>
                         <h3 class="font-serif text-2xl md:text-3xl text-carbon-black-900 mb-3 group-hover:text-wine-plum-600 transition-colors leading-snug">{concert.title[lang]}</h3>
@@ -190,9 +232,47 @@
                 {/each}
             </div>
             
-            <div class="mt-16 text-center reveal">
-                <p class="font-sans font-light text-carbon-black-500 italic">{t.moreDates}</p>
+            {#if hasMoreFuture}
+            <div class="mt-12 text-center reveal">
+                <button onclick={() => futureLimit += 5} class="px-8 py-3 border-2 border-powder-blue-200 text-carbon-black-700 hover:bg-powder-blue-100 hover:border-powder-blue-300 rounded-full font-sans text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-sm cursor-pointer">
+                    {t.showMore}
+                </button>
             </div>
+            {/if}
+
+            <div class="mt-16 text-center reveal flex flex-col items-center">
+                <p class="font-sans font-light text-carbon-black-500 italic mb-8">{t.moreDates}</p>
+                {#if pastConcerts.length > 0}
+                <button onclick={() => showPast = !showPast} class="px-6 py-2 border border-carbon-black-200 text-carbon-black-500 hover:text-carbon-black-800 hover:bg-white hover:border-carbon-black-300 rounded-full font-sans text-sm font-medium transition-all duration-300 shadow-sm cursor-pointer">
+                    {showPast ? t.hidePast : t.showPast}
+                </button>
+                {/if}
+            </div>
+
+            {#if showPast}
+            <div class="flex flex-col space-y-6 mt-8">
+                {#each pastConcerts as concert, i}
+                <div class="reveal opacity-60 group flex flex-col md:flex-row justify-between items-start md:items-center p-8 md:p-10 bg-white/50 border border-powder-blue-50 rounded-xl hover:opacity-100 hover:border-powder-blue-200 hover:bg-white transition-all duration-300 gap-6">
+                    <div class="flex flex-col flex-1 w-full md:pr-8">
+                        <span class="font-sans font-semibold text-carbon-black-400 text-xs tracking-[0.2em] uppercase mb-3 block">{t.past}</span>
+                        <h3 class="font-serif text-2xl md:text-3xl text-carbon-black-700 mb-3 leading-snug group-hover:text-carbon-black-900 transition-colors">{concert.title[lang]}</h3>
+                        <p class="font-sans font-light text-carbon-black-500 flex items-start sm:items-center mt-auto text-sm md:text-base">
+                            <Icon icon="mdi:map-marker-outline" class="mr-2 mt-0.5 sm:mt-0 shrink-0" width="1.2rem" height="1.2rem" /> 
+                            <span>{concert.location[lang]}</span>
+                        </p>
+                    </div>
+                    <div class="flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end w-full md:w-auto shrink-0 md:pl-10 md:border-l border-t md:border-t-0 border-powder-blue-100 pt-6 md:pt-0">
+                        <div class="flex flex-col md:items-end">
+                            <span class="font-sans text-xl md:text-2xl font-medium text-carbon-black-500 group-hover:text-carbon-black-700 transition-colors">{concert.date}</span>
+                            <span class="font-sans font-light text-carbon-black-400 group-hover:text-carbon-black-500 md:mt-2 flex items-center transition-colors">
+                                <Icon icon="mdi:clock-outline" class="mr-2" /> {concert.time}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {/each}
+            </div>
+            {/if}
         </div>
     </section>
 
