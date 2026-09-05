@@ -11,13 +11,6 @@
         {
             title: { de: "Une histoire de france - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de france - Concert with Wind Philharmonic Rhein-Main" },
             location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
-            date: "27.9.2025",
-            isoDate: "2025-09-27",
-            time: "16:00",
-            ticketUrl: "https://bprm.info/"
-        }, {
-            title: { de: "Une histoire de france - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de france - Concert with Wind Philharmonic Rhein-Main" },
-            location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
             date: "27.9.2026",
             isoDate: "2026-09-27",
             time: "16:00",
