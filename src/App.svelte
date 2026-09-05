@@ -28,6 +28,13 @@
             date: "5.12.2026",
             time: "19:30 - 21:00",
             ticketUrl: ""
+        },
+        {
+            title: { de: "Reihe Forum Komposition 13", en: "Forum Composition Series 13" },
+            location: { de: "Palais Bellevue, Kassel", en: "Palais Bellevue, Kassel" },
+            date: "21.11.2026",
+            time: "20:00 - 21:30",
+            ticketUrl: ""
         }
     ];
 
