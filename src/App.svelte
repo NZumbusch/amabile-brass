@@ -9,7 +9,7 @@
 
     const allConcerts = [
         {
-            title: { de: "Une histoire de france - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de france - Concert with Wind Philharmonic Rhein-Main" },
+            title: { de: "Une histoire de France - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de France - Concert with Wind Philharmonic Rhein-Main" },
             location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
             date: "27.9.2026",
             isoDate: "2026-09-27",
