@@ -22,7 +22,8 @@
             date: "5.12.2026",
             isoDate: "2026-12-05",
             time: "16:00 - 17:30",
-            ticketUrl: ""
+            ticketUrl: "",
+            mapUrl: "https://maps.app.goo.gl/Dekuwae5ELWv8xXT7"
         },
         {
             title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
@@ -30,7 +31,8 @@
             date: "5.12.2026",
             isoDate: "2026-12-05",
             time: "19:30 - 21:00",
-            ticketUrl: ""
+            ticketUrl: "",
+            mapUrl: "https://maps.app.goo.gl/6rEDCm6MPdBzS6Jy5"
         },
         {
             title: { de: "Reihe Forum Komposition 13", en: "Forum Composition Series 13" },
@@ -38,6 +40,16 @@
             date: "21.11.2026",
             isoDate: "2026-11-21",
             time: "20:00 - 21:30",
+            ticketUrl: "",
+            mapUrl: "https://maps.app.goo.gl/8BiHepq6Jc5rbf2MA"
+        },
+        {
+            title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
+            location: { de: "Evangelische Kirche, Waldkirch", en: "Protestant Church, Waldkirch" },
+            mapUrl: "https://maps.app.goo.gl/a2cb7xGNrKsBjbGP7",
+            date: "6.12.2026",
+            isoDate: "2026-12-06",
+            time: "11:30 - 12:30",
             ticketUrl: ""
         }
     ];
@@ -207,7 +219,11 @@
                         <h3 class="font-serif text-2xl md:text-3xl text-carbon-black-900 mb-3 group-hover:text-wine-plum-600 transition-colors leading-snug">{concert.title[lang]}</h3>
                         <p class="font-sans font-light text-carbon-black-500 flex items-start sm:items-center mt-auto text-sm md:text-base">
                             <Icon icon="mdi:map-marker-outline" class="mr-2 mt-0.5 sm:mt-0 shrink-0" width="1.2rem" height="1.2rem" /> 
+                            {#if concert.mapUrl}
+                            <a href={concert.mapUrl} target="_blank" rel="noopener noreferrer" title="Google Maps" class="hover:text-wine-plum-600 underline decoration-dotted decoration-carbon-black-300 underline-offset-4 transition-colors">{concert.location[lang]}</a>
+                            {:else}
                             <span>{concert.location[lang]}</span>
+                            {/if}
                         </p>
                     </div>
                     <div class="flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end w-full md:w-auto shrink-0 md:pl-10 md:border-l border-t md:border-t-0 border-powder-blue-100 pt-6 md:pt-0">
@@ -253,7 +269,11 @@
                         <h3 class="font-serif text-2xl md:text-3xl text-carbon-black-700 mb-3 leading-snug group-hover:text-carbon-black-900 transition-colors">{concert.title[lang]}</h3>
                         <p class="font-sans font-light text-carbon-black-500 flex items-start sm:items-center mt-auto text-sm md:text-base">
                             <Icon icon="mdi:map-marker-outline" class="mr-2 mt-0.5 sm:mt-0 shrink-0" width="1.2rem" height="1.2rem" /> 
+                            {#if concert.mapUrl}
+                            <a href={concert.mapUrl} target="_blank" rel="noopener noreferrer" title="Google Maps" class="hover:text-wine-plum-600 underline decoration-dotted decoration-carbon-black-300 underline-offset-4 transition-colors">{concert.location[lang]}</a>
+                            {:else}
                             <span>{concert.location[lang]}</span>
+                            {/if}
                         </p>
                     </div>
                     <div class="flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end w-full md:w-auto shrink-0 md:pl-10 md:border-l border-t md:border-t-0 border-powder-blue-100 pt-6 md:pt-0">
