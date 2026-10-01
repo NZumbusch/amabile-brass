@@ -7,6 +7,9 @@ media:
 
 settings:
   content:
+    merge: false
+
+content:
   - name: site
     label: Titelbild / Cover image
     type: file
@@ -19,9 +22,6 @@ settings:
         required: true
         description: Wird oben auf der Seite angezeigt. Querformat empfohlen.
 
-    merge: false
-
-content:
   - name: concerts
     label: Konzerte / Concerts
     type: file
