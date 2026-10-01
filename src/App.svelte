@@ -3,6 +3,7 @@
     import Icon from "@iconify/svelte";
     import concertsData from "./content/concerts.json";
     import biography from "./content/biography.json";
+    import site from "./content/site.json";
 
     const socialMedia = [
         { icon: "fa:youtube", url: "https://www.youtube.com/@AmabileBrass" },
@@ -117,7 +118,7 @@
     <section id="hero" class="relative w-full h-[65svh] md:h-[100svh] flex flex-col justify-center items-center overflow-hidden bg-carbon-black-950">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
-            <img src="/img/pictures/amabile_colored_background_crop.jpg" alt="Amabile Brass" class="w-full h-full object-cover object-[50%_25%] opacity-100" />
+            <img src={site.coverImage} alt="Amabile Brass" class="w-full h-full object-cover object-[50%_25%] opacity-100" />
             <!-- Radial gradient only behind the text so the edges remain untouched -->
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_0%,transparent_70%)]"></div>
         </div>

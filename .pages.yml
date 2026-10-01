@@ -7,6 +7,18 @@ media:
 
 settings:
   content:
+  - name: site
+    label: Titelbild / Cover image
+    type: file
+    path: src/content/site.json
+    format: json
+    fields:
+      - name: coverImage
+        label: Titelbild / Cover image
+        type: image
+        required: true
+        description: Wird oben auf der Seite angezeigt. Querformat empfohlen.
+
     merge: false
 
 content:
