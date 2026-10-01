@@ -1,0 +1,74 @@
+{
+  "concerts": [
+    {
+      "title": {
+        "de": "Une histoire de France - Konzert mit der Bläserphilharmonie Rhein-Main",
+        "en": "Une histoire de France - Concert with Wind Philharmonic Rhein-Main"
+      },
+      "location": {
+        "de": "Congress Park Hanau",
+        "en": "Congress Park Hanau"
+      },
+      "date": "2026-09-27",
+      "time": "16:00",
+      "ticketUrl": "https://bprm.info/",
+      "mapUrl": ""
+    },
+    {
+      "title": {
+        "de": "Weihnachtskonzert",
+        "en": "Christmas Concert"
+      },
+      "location": {
+        "de": "Dreifaltigkeitskirche Freiburg",
+        "en": "Trinity Church Freiburg"
+      },
+      "date": "2026-12-05",
+      "time": "16:00 - 17:30",
+      "ticketUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/Dekuwae5ELWv8xXT7"
+    },
+    {
+      "title": {
+        "de": "Weihnachtskonzert",
+        "en": "Christmas Concert"
+      },
+      "location": {
+        "de": "St. Petrus Canisius Kirche Freiburg",
+        "en": "St. Petrus Canisius Church Freiburg"
+      },
+      "date": "2026-12-05",
+      "time": "19:30 - 21:00",
+      "ticketUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/6rEDCm6MPdBzS6Jy5"
+    },
+    {
+      "title": {
+        "de": "Reihe Forum Komposition 13",
+        "en": "Forum Composition Series 13"
+      },
+      "location": {
+        "de": "Palais Bellevue, Kassel",
+        "en": "Palais Bellevue, Kassel"
+      },
+      "date": "2026-11-21",
+      "time": "20:00 - 21:30",
+      "ticketUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/8BiHepq6Jc5rbf2MA"
+    },
+    {
+      "title": {
+        "de": "Weihnachtskonzert",
+        "en": "Christmas Concert"
+      },
+      "location": {
+        "de": "Evangelische Kirche, Waldkirch",
+        "en": "Protestant Church, Waldkirch"
+      },
+      "date": "2026-12-06",
+      "time": "11:30 - 12:30",
+      "ticketUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/a2cb7xGNrKsBjbGP7"
+    }
+  ]
+}

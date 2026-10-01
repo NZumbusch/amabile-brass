@@ -1,0 +1,69 @@
+# Pages CMS configuration: https://pagescms.org/docs/configuration/
+media:
+  input: public/img/pictures
+  output: /img/pictures
+  categories: [image]
+  rename: safe
+
+settings:
+  content:
+    merge: false
+
+content:
+  - name: concerts
+    label: Konzerte / Concerts
+    type: file
+    path: src/content/concerts.json
+    format: json
+    fields:
+      - name: concerts
+        label: Konzerte / Concerts
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Titel / Title
+            type: object
+            fields:
+              - { name: de, label: Deutsch, type: string, required: true }
+              - { name: en, label: English, type: string, required: true }
+          - name: location
+            label: Ort / Location
+            type: object
+            fields:
+              - { name: de, label: Deutsch, type: string, required: true }
+              - { name: en, label: English, type: string, required: true }
+          - name: date
+            label: Datum / Date
+            type: date
+            required: true
+            default: ""
+            options:
+              format: yyyy-MM-dd
+          - name: time
+            label: Uhrzeit / Time
+            type: string
+            description: 'z.B. "16:00" oder "16:00 - 17:30"'
+          - name: ticketUrl
+            label: Ticket-Link
+            type: string
+            description: Leer lassen, wenn es keine Tickets gibt.
+          - name: mapUrl
+            label: Google-Maps-Link
+            type: string
+            description: Leer lassen, wenn kein Link angezeigt werden soll.
+
+  - name: biography
+    label: Biografie / Biography
+    type: file
+    path: src/content/biography.json
+    format: json
+    fields:
+      - name: de
+        label: Deutsch (ein Absatz pro Eintrag)
+        type: text
+        list: true
+      - name: en
+        label: English (one paragraph per entry)
+        type: text
+        list: true

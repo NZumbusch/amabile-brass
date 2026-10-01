@@ -1,58 +1,15 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import Icon from "@iconify/svelte";
+    import concertsData from "./content/concerts.json";
+    import biography from "./content/biography.json";
 
     const socialMedia = [
         { icon: "fa:youtube", url: "https://www.youtube.com/@AmabileBrass" },
         { icon: "fa:instagram", url: "https://www.instagram.com/amabile.brass" }
     ];
 
-    const allConcerts = [
-        {
-            title: { de: "Une histoire de France - Konzert mit der Bläserphilharmonie Rhein-Main", en: "Une histoire de France - Concert with Wind Philharmonic Rhein-Main" },
-            location: { de: "Congress Park Hanau", en: "Congress Park Hanau" },
-            date: "27.9.2026",
-            isoDate: "2026-09-27",
-            time: "16:00",
-            ticketUrl: "https://bprm.info/"
-        },
-        {
-            title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
-            location: { de: "Dreifaltigkeitskirche Freiburg", en: "Trinity Church Freiburg" },
-            date: "5.12.2026",
-            isoDate: "2026-12-05",
-            time: "16:00 - 17:30",
-            ticketUrl: "",
-            mapUrl: "https://maps.app.goo.gl/Dekuwae5ELWv8xXT7"
-        },
-        {
-            title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
-            location: { de: "St. Petrus Canisius Kirche Freiburg", en: "St. Petrus Canisius Church Freiburg" },
-            date: "5.12.2026",
-            isoDate: "2026-12-05",
-            time: "19:30 - 21:00",
-            ticketUrl: "",
-            mapUrl: "https://maps.app.goo.gl/6rEDCm6MPdBzS6Jy5"
-        },
-        {
-            title: { de: "Reihe Forum Komposition 13", en: "Forum Composition Series 13" },
-            location: { de: "Palais Bellevue, Kassel", en: "Palais Bellevue, Kassel" },
-            date: "21.11.2026",
-            isoDate: "2026-11-21",
-            time: "20:00 - 21:30",
-            ticketUrl: "",
-            mapUrl: "https://maps.app.goo.gl/8BiHepq6Jc5rbf2MA"
-        },
-        {
-            title: { de: "Weihnachtskonzert", en: "Christmas Concert" },
-            location: { de: "Evangelische Kirche, Waldkirch", en: "Protestant Church, Waldkirch" },
-            mapUrl: "https://maps.app.goo.gl/a2cb7xGNrKsBjbGP7",
-            date: "6.12.2026",
-            isoDate: "2026-12-06",
-            time: "11:30 - 12:30",
-            ticketUrl: ""
-        }
-    ];
+    const allConcerts = concertsData.concerts;
 
     type Language = 'de' | 'en';
     let lang = $state<Language>(typeof navigator !== 'undefined' && navigator.language.startsWith('en') ? 'en' : 'de');
@@ -65,7 +22,8 @@
 
     const mappedConcerts = allConcerts.map(c => ({
         ...c,
-        parsedDate: new Date(c.isoDate)
+        parsedDate: new Date(c.date),
+        displayDate: c.date.split("-").reverse().map(Number).join(".")
     }));
 
     const futureConcerts = mappedConcerts
@@ -81,7 +39,7 @@
 
     $effect(() => {
         // trigger effect on language change, or when concerts are toggled/paged
-        const deps = [lang, showPast, futureLimit]; 
+        void [lang, showPast, futureLimit];
         
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
@@ -104,22 +62,12 @@
         }
     };
     
-    const scrollTo = (id: string) => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    };
-
     const translations = {
         de: {
             subtitle: "Blechbläserquartett",
             navStart: "Start",
             biographyTitle: "Biografie",
-            biographyText: [
-                "Seit seiner Gründung 2025 sorgt Amabile Brass für frischen Wind in der deutschen Klassikszene. Das junge Quartett besteht aus Althorn (Anabel Voigt), zwei Euphonien (Nathan Zumbusch und Klemens Vetter) und Tuba (Lara Schomann) und überzeugt mit einem lieblichen, virtuosen und zugleich aufregenden kammermusikalischen Zusammenspiel.",
-                "Die Besetzung ist in Deutschland einzigartig: vier tiefe, konisch geformte Blechblasinstrumente, die zusammen einen außergewöhnlich homogenen Klangkörper bilden. Mit ihren vielfältigen Farben und der Wärme ihres Klangs erinnern sie an Orgeln oder Chöre und schaffen ein Hörerlebnis, das selten in der Kammermusik zu finden ist.",
-                "Mit diesem Ansatz möchte Amabile Brass ihre drei Instrumente Althorn, Euphonium und Tuba stärker ins Rampenlicht rücken und die Wahrnehmung dieser in der deutschen Klassikszene verändern. Bereits beim Deutschen Musikwettbewerb 2026 gelang dem Ensemble ein beeindruckender Meilenstein: Sie erreichten das Halbfinale in der Kategorie „Ensembles in freier Besetzung“. Zugleich war dies die erste Präsentation von Althorn und Euphonium bei diesem renommierten klassischen Wettbewerb jemals und gleichzeitig das erste öffentliche Konzert des Ensembles.",
-                "Die wachsende Präsenz dieser Instrumente in Brass Bands und professionellen Blasorchestern hat ihre Popularität in den letzten Jahren gesteigert, und so finden sie allmählich auch an deutschen Musikhochschulen und in der professionellen Musikszene ihren festen Platz.",
-                "Die Mitglieder von Amabile Brass arbeiten in vielfältigen Bereichen - von freischaffender künstlerischer Tätigkeit über Hochschullehre und pädagogischem Schaffen bis hin zu Musikphysiologie und Musikpsychologie. Gemeinsam vereint sie ihre Leidenschaft, die Ausdruckskraft der tiefen Blechbläser in all ihren Facetten zu vermitteln - etwas, das sie mit ihren bisherigen Auftritten und ihrer einzigartigen Klangwelt eindrucksvoll erreicht haben."
-            ],
+            biographyText: biography.de,
             concertsTitle: "Konzerte",
             upcoming: "Demnächst",
             past: "Vergangen",
@@ -137,12 +85,7 @@
             subtitle: "Brass Quartet",
             navStart: "Start",
             biographyTitle: "Biography",
-            biographyText: [
-                "Since its founding in 2025, Amabile Brass has been bringing fresh energy to the German classical music scene. The young quartet consists of alto horn (Anabel Voigt), two euphoniums (Nathan Zumbusch and Klemens Vetter), and tuba (Lara Schomann), and captivates audiences with a lyrical, virtuosic, and at the same time exciting chamber music interplay.",
-                "This instrumentation is unique in Germany: four low, conical brass instruments that together create an exceptionally homogeneous sound. With their wide range of colours and the warmth of their tone, they evoke associations with organs or choirs, offering a listening experience rarely found in chamber music.",
-                "With this approach, Amabile Brass aims to bring its three instruments - alto horn, euphonium, and tuba - more into the spotlight and to reshape their perception in the German classical music scene. The ensemble has already achieved an impressive milestone at the German Music Competition 2026, where it advanced to the semifinals in the category \"Ensembles in Open Instrumentation.\" At the same time, this marked the first-ever presentation of alto horn and euphonium at this prestigious classical competition, as well as the ensemble's first public concert.",
-                "The members of Amabile Brass work in a wide range of fields, from freelance artistic performance to university teaching and pedagogy, as well as music physiology and music psychology. Together, they share a passion for conveying the expressive power of low brass in all its facets - something they have impressively achieved through their performances so far and their unique sound world."
-            ],
+            biographyText: biography.en,
             concertsTitle: "Concerts",
             upcoming: "Upcoming",
             past: "Past",
@@ -212,7 +155,7 @@
         <div class="max-w-4xl mx-auto">
             <h2 class="font-serif text-4xl md:text-6xl mb-16 text-center text-carbon-black-800 reveal">{t.concertsTitle}</h2>
             <div class="flex flex-col space-y-6">
-                {#each displayedFuture as concert, i}
+                {#each displayedFuture as concert}
                 <div class="reveal group flex flex-col md:flex-row justify-between items-start md:items-center p-8 md:p-10 bg-white border border-powder-blue-100 rounded-xl hover:shadow-xl hover:border-powder-blue-300 transition-all duration-300 gap-6">
                     <div class="flex flex-col flex-1 w-full md:pr-8">
                         <span class="font-sans font-semibold text-powder-blue-600 text-xs tracking-[0.2em] uppercase mb-3 block">{t.upcoming}</span>
@@ -228,7 +171,7 @@
                     </div>
                     <div class="flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end w-full md:w-auto shrink-0 md:pl-10 md:border-l border-t md:border-t-0 border-powder-blue-100 pt-6 md:pt-0">
                         <div class="flex flex-col md:items-end">
-                            <span class="font-sans text-xl md:text-2xl font-medium text-carbon-black-800">{concert.date}</span>
+                            <span class="font-sans text-xl md:text-2xl font-medium text-carbon-black-800">{concert.displayDate}</span>
                             <span class="font-sans font-light text-carbon-black-500 md:mt-2 flex items-center">
                                 <Icon icon="mdi:clock-outline" class="mr-2" /> {concert.time}
                             </span>
@@ -262,7 +205,7 @@
 
             {#if showPast}
             <div class="flex flex-col space-y-6 mt-8">
-                {#each pastConcerts as concert, i}
+                {#each pastConcerts as concert}
                 <div class="reveal opacity-60 group flex flex-col md:flex-row justify-between items-start md:items-center p-8 md:p-10 bg-white/50 border border-powder-blue-50 rounded-xl hover:opacity-100 hover:border-powder-blue-200 hover:bg-white transition-all duration-300 gap-6">
                     <div class="flex flex-col flex-1 w-full md:pr-8">
                         <span class="font-sans font-semibold text-carbon-black-400 text-xs tracking-[0.2em] uppercase mb-3 block">{t.past}</span>
@@ -278,7 +221,7 @@
                     </div>
                     <div class="flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end w-full md:w-auto shrink-0 md:pl-10 md:border-l border-t md:border-t-0 border-powder-blue-100 pt-6 md:pt-0">
                         <div class="flex flex-col md:items-end">
-                            <span class="font-sans text-xl md:text-2xl font-medium text-carbon-black-500 group-hover:text-carbon-black-700 transition-colors">{concert.date}</span>
+                            <span class="font-sans text-xl md:text-2xl font-medium text-carbon-black-500 group-hover:text-carbon-black-700 transition-colors">{concert.displayDate}</span>
                             <span class="font-sans font-light text-carbon-black-400 group-hover:text-carbon-black-500 md:mt-2 flex items-center transition-colors">
                                 <Icon icon="mdi:clock-outline" class="mr-2" /> {concert.time}
                             </span>

@@ -27,12 +27,6 @@ All text and concert listings are managed directly inside `src/App.svelte`.
 
 ## Deployment
 
-The site is hosted on GitHub Pages. To build and deploy the latest version:
-
-```bash
-npm run deploy
-```
-
-This command executes the Vite build step and pushes the contents of the `dist/` directory to the `gh-pages` branch.
+The site is hosted on GitHub Pages and deployed automatically by the GitHub Actions workflow (`.github/workflows/deploy.yaml`) on every push to `main`. To preview a production build locally, run `npm run build && npm run preview`.
 
 The custom domain (`amabilebrass.de`) is routed via the `public/CNAME` file. If the domain stops resolving after a deployment, verify that your DNS host's A-records still point to the official GitHub Pages IP addresses.
